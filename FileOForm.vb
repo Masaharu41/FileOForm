@@ -9,6 +9,9 @@ Module FileOForm
         'ReadFromFile()
         '   WriteAsAppend()
         'WriteAsOutput()
+        'For i = 0 To 254
+        '    Console.WriteLine($"{i}: {ChrW(i)}")
+        ' Next
         ReadCustomerData()
         Console.Read()
     End Sub
@@ -87,8 +90,13 @@ Module FileOForm
                 temp = Split(firstName, "$$")
                 firstName = temp(1)
                 email = Replace(email, Chr(34), "")
-                email = Replace(email, "", "")
+                email = Replace(email, Chr(160), "")
+                email = Replace(email, Chr(197), "")
+                If InStr(email, Chr(160)) > 0 Then
+                    MsgBox(email)
+                    Asc(" ")
 
+                End If
                 Console.WriteLine($"First name: {firstName}")
                 Console.WriteLine($"Last name: {lastName}")
                 Console.WriteLine($"city: {city}")
