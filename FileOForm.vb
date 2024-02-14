@@ -1,4 +1,8 @@
-﻿Option Explicit On
+﻿
+
+
+
+Option Explicit On
 Option Strict On
 Imports System.Collections.Specialized
 Imports System.Security.Cryptography
@@ -11,7 +15,7 @@ Module FileOForm
         'WriteAsOutput()
         'For i = 0 To 254
         '    Console.WriteLine($"{i}: {ChrW(i)}")
-        ' Next
+        'Next
         ReadCustomerData()
         Console.Read()
     End Sub
@@ -91,12 +95,9 @@ Module FileOForm
                 firstName = temp(1)
                 email = Replace(email, Chr(34), "")
                 email = Replace(email, Chr(160), "")
-                email = Replace(email, Chr(197), "")
-                If InStr(email, Chr(160)) > 0 Then
-                    MsgBox(email)
-                    Asc(" ")
+                email = Replace(email, Chr(194), "")
+                lastName = Replace(lastName, Chr(194), "")
 
-                End If
                 Console.WriteLine($"First name: {firstName}")
                 Console.WriteLine($"Last name: {lastName}")
                 Console.WriteLine($"city: {city}")
