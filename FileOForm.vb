@@ -13,6 +13,7 @@ Module FileOForm
         'ReadFromFile()
         '   WriteAsAppend()
         'WriteAsOutput()
+        '' Writes all characters known as their character code
         'For i = 0 To 254
         '    Console.WriteLine($"{i}: {ChrW(i)}")
         'Next
@@ -77,7 +78,7 @@ Module FileOForm
     Sub ReadCustomerData()
         Dim recordData$, firstName$, lastName$, city$, email$
         Dim temp() As String
-
+        Dim customerID As Integer = 620000000
         Try
             FileOpen(1, "UserData.txt", OpenMode.Input)
             Do Until EOF(1)
@@ -98,11 +99,19 @@ Module FileOForm
                 email = Replace(email, Chr(194), "")
                 lastName = Replace(lastName, Chr(194), "")
 
+                customerID += 1
+
+                ' first, last, street, city, state, zip, email, phone, customer ID, Balance
+
+                temp = {firstName, lastName, "", city, "", "", email, "", CStr(customerID), ""}
+
+                AppendCustomerRecord("CustomerRecords.txt", temp)
+
                 Console.WriteLine($"First name: {firstName}")
                 Console.WriteLine($"Last name: {lastName}")
                 Console.WriteLine($"city: {city}")
                 Console.WriteLine($"email: {email}")
-                Console.ReadLine()
+                ' Console.ReadLine()
 
             Loop
 
@@ -111,4 +120,22 @@ Module FileOForm
             FileClose(1)
         End Try
     End Sub
+
+    Sub AppendCustomerRecord(fileName$, customerRecord() As String)
+        Dim fileNumber As Integer = FreeFile()
+
+        Try
+            FileOpen(fileNumber, fileName, OpenMode.Append)
+
+            For i = LBound(customerRecord) To UBound(customerRecord)
+                Write(fileNumber, customerRecord(i))
+            Next
+
+            FileClose(fileNumber)
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
 End Module
